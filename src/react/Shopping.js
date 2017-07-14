@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-//import serviceWorker from './serviceWorker';
 
 
 class Shopping extends Component {

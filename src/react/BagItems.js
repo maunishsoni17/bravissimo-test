@@ -1,49 +1,45 @@
 import React, { Component } from 'react';
-//import serviceWorker from './serviceWorker';
 
-var items = [
-   {
-      "name" : "Isla Bra",
-	  "sku" : "LN332",
-	  "price" : "£29"
-   }
-];
+const listItemsURL = "http://localhost:8080/listBagItems";
 
-
-class Item extends Component {
-  render() {
-    return (
-      <tr>
-        <td>{this.props.item.name}</td>
-        <td>{this.props.item.sku}</td>
-        <td>{this.props.item.price}</td>
+function Item(props) {
+    return  <tr>
+        <td>{props.item.name}</td>
+        <td>{props.item.sku}</td>
+        <td>{props.item.price}</td>
         <td><button>Add</button></td>
-      </tr>);
-  }
+      </tr>;
 };
 
-class ItemTable extends Component {
-  render() {
+function ItemTable(props) {
     var rows = [];
-    this.props.items.forEach(function(item) {
-      rows.push(<Item item={item} />);
+    props.items.forEach(function(poduct) {
+      rows.push(<Item item={poduct} />);
     });
-    return (
-      <table>
+    return <table>
         <thead>
           <tr>
             <th>Name</th><th>sku</th><th>Price</th><th>Add</th>
           </tr>
         </thead>
         <tbody>{rows}</tbody>
-      </table>);
-  }
+      </table>;
 };
 
-class Items extends Component {
+class Items extends Component{
+    constructor() {
+        super();
+        this.items = [];
+    }
+       componentDidMount() {
+           fetch(listItemURL) 
+            .then(result=> {
+                this.items = result.json();
+            });
+        };
   render() {
     return (
-      <ItemTable items={items} />
+        <ItemTable items={this.items} />
     );
   }
 }

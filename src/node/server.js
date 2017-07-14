@@ -3,8 +3,18 @@ const bodyParser = require('body-parser')
 var app = express();
 var fs = require("fs");
 
+//CORS middleware
+var allowCrossDomain = function(req, res, next) {
+    res.header('Access-Control-Allow-Origin', 'localhost');
+    res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+    next();
+}
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }))
+app.use(allowCrossDomain);
 
 
 app.get('/listProducts', function (req, res) {

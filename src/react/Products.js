@@ -1,19 +1,6 @@
 import React, { Component } from 'react';
-//import serviceWorker from './serviceWorker';
 
-var products = [
-   {
-      "name" : "Isla Bra",
-	  "sku" : "LN332",
-	  "price" : "£29"
-   },
-   {
-      "name" : "Nordic Rose Bra",
-	  "sku" : "LN336",
-	  "price" : "£30"
-   }];
-
-
+const listProductsURL = "http://localhost:8080/listProducts";
 function Product(props) {
     return  <tr>
         <td>{props.product.name}</td>
@@ -39,9 +26,20 @@ function ProductTable(props) {
 };
 
 class Products extends Component{
+    constructor() {
+        super();
+        this.products = [];
+    }
+       componentDidMount() {
+           fetch(listProductsURL) 
+            .then(result=> {
+                console.log(result.json());
+                this.products = result.json();
+            });
+        };
   render() {
     return (
-        <ProductTable products={products} />
+        <ProductTable products={this.products} />
     );
   }
 }
